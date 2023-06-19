@@ -2,7 +2,7 @@ CREATE TABLE "User" (
   "id" integer PRIMARY KEY,
   "name" varchar,
   "surname" varchar,
-  "email" email,
+  "email" varchar,
   "password_hash" varchar,
   "last_login" timestamp,
   "xp_points" float
@@ -17,7 +17,8 @@ CREATE TABLE "Language" (
 CREATE TABLE "Course" (
   "id" integer PRIMARY KEY,
   "language_id" integer,
-  "name" varchar
+  "name" varchar,
+  CONSTRAINT "course_unique_id" UNIQUE ("id")
 );
 
 CREATE TABLE "Section" (
@@ -42,14 +43,9 @@ CREATE TABLE "User_course" (
   "id" integer PRIMARY KEY,
   "user_id" integer,
   "course_id" integer,
-  "start_date" timestamp,
-  "end_date" timestamp
-);
-
-CREATE TABLE "User_lesson" (
-  "id" integer PRIMARY KEY,
-  "user_id" integer,
   "lesson_id" integer,
+  "unit_id" integer,
+  "section_id" integer,
   "start_date" timestamp,
   "end_date" timestamp
 );
@@ -60,8 +56,14 @@ ALTER TABLE "Unit" ADD FOREIGN KEY ("section_id") REFERENCES "Section" ("id");
 
 ALTER TABLE "Lesson" ADD FOREIGN KEY ("unit_id") REFERENCES "Unit" ("id");
 
-ALTER TABLE "Language" ADD FOREIGN KEY ("id") REFERENCES "Course" ("language_id");
+ALTER TABLE "Course" ADD FOREIGN KEY ("language_id") REFERENCES "Language" ("id");
 
-ALTER TABLE "User" ADD FOREIGN KEY ("id") REFERENCES "User_course" ("user_id");
+ALTER TABLE "User_course" ADD FOREIGN KEY ("user_id") REFERENCES "User" ("id");
 
-ALTER TABLE "User" ADD FOREIGN KEY ("id") REFERENCES "User_lesson" ("user_id");
+ALTER TABLE "User_course" ADD FOREIGN KEY ("course_id") REFERENCES "Course" ("id");
+
+ALTER TABLE "User_course" ADD FOREIGN KEY ("lesson_id") REFERENCES "Lesson" ("id");
+
+ALTER TABLE "User_course" ADD FOREIGN KEY ("unit_id") REFERENCES "Unit" ("id");
+
+ALTER TABLE "User_course" ADD FOREIGN KEY ("section_id") REFERENCES "Section" ("id");
