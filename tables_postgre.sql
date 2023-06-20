@@ -1,5 +1,5 @@
 CREATE TABLE "User" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "surname" varchar,
   "email" varchar,
@@ -9,38 +9,38 @@ CREATE TABLE "User" (
 );
 
 CREATE TABLE "Language" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "code" varchar
 );
 
 CREATE TABLE "Course" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "language_id" integer,
   "name" varchar,
   CONSTRAINT "course_unique_id" UNIQUE ("id")
 );
 
 CREATE TABLE "Section" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "course_id" int,
   "name" varchar
 );
 
 CREATE TABLE "Unit" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "section_id" integer,
   "name" varchar
 );
 
 CREATE TABLE "Lesson" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "unit_id" int,
   "name" varchar
 );
 
 CREATE TABLE "User_course" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "course_id" integer,
   "lesson_id" integer,
