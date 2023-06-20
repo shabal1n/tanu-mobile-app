@@ -1,4 +1,4 @@
-CREATE TABLE "User" (
+CREATE TABLE "Users" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "surname" varchar,
@@ -8,38 +8,38 @@ CREATE TABLE "User" (
   "xp_points" float
 );
 
-CREATE TABLE "Language" (
+CREATE TABLE "Languages" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "code" varchar
 );
 
-CREATE TABLE "Course" (
+CREATE TABLE "Courses" (
   "id" SERIAL PRIMARY KEY,
   "language_id" integer,
   "name" varchar,
   CONSTRAINT "course_unique_id" UNIQUE ("id")
 );
 
-CREATE TABLE "Section" (
+CREATE TABLE "Sections" (
   "id" SERIAL PRIMARY KEY,
   "course_id" int,
   "name" varchar
 );
 
-CREATE TABLE "Unit" (
+CREATE TABLE "Units" (
   "id" SERIAL PRIMARY KEY,
   "section_id" integer,
   "name" varchar
 );
 
-CREATE TABLE "Lesson" (
+CREATE TABLE "Lessons" (
   "id" SERIAL PRIMARY KEY,
   "unit_id" int,
   "name" varchar
 );
 
-CREATE TABLE "User_course" (
+CREATE TABLE "User_courses" (
   "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "course_id" integer,
@@ -50,20 +50,20 @@ CREATE TABLE "User_course" (
   "end_date" timestamp
 );
 
-ALTER TABLE "Section" ADD FOREIGN KEY ("course_id") REFERENCES "Course" ("id");
+ALTER TABLE "Sections" ADD FOREIGN KEY ("course_id") REFERENCES "Courses" ("id");
 
-ALTER TABLE "Unit" ADD FOREIGN KEY ("section_id") REFERENCES "Section" ("id");
+ALTER TABLE "Units" ADD FOREIGN KEY ("section_id") REFERENCES "Sections" ("id");
 
-ALTER TABLE "Lesson" ADD FOREIGN KEY ("unit_id") REFERENCES "Unit" ("id");
+ALTER TABLE "Lessons" ADD FOREIGN KEY ("unit_id") REFERENCES "Units" ("id");
 
-ALTER TABLE "Course" ADD FOREIGN KEY ("language_id") REFERENCES "Language" ("id");
+ALTER TABLE "Courses" ADD FOREIGN KEY ("language_id") REFERENCES "Languages" ("id");
 
-ALTER TABLE "User_course" ADD FOREIGN KEY ("user_id") REFERENCES "User" ("id");
+ALTER TABLE "User_courses" ADD FOREIGN KEY ("user_id") REFERENCES "Users" ("id");
 
-ALTER TABLE "User_course" ADD FOREIGN KEY ("course_id") REFERENCES "Course" ("id");
+ALTER TABLE "User_courses" ADD FOREIGN KEY ("course_id") REFERENCES "Courses" ("id");
 
-ALTER TABLE "User_course" ADD FOREIGN KEY ("lesson_id") REFERENCES "Lesson" ("id");
+ALTER TABLE "User_courses" ADD FOREIGN KEY ("lesson_id") REFERENCES "Lessons" ("id");
 
-ALTER TABLE "User_course" ADD FOREIGN KEY ("unit_id") REFERENCES "Unit" ("id");
+ALTER TABLE "User_courses" ADD FOREIGN KEY ("unit_id") REFERENCES "Units" ("id");
 
-ALTER TABLE "User_course" ADD FOREIGN KEY ("section_id") REFERENCES "Section" ("id");
+ALTER TABLE "User_courses" ADD FOREIGN KEY ("section_id") REFERENCES "Sections" ("id");
